@@ -1,15 +1,9 @@
 <template>
-    <p class="text-3xl">ta</p>
+    <p class="text-3xl">test</p>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup>
 
-export default defineComponent({
-    setup() {
-        
-    },
-})
 </script>
 
 

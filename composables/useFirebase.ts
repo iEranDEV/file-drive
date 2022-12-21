@@ -3,19 +3,27 @@ import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 import { getFirestore} from 'firebase/firestore';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDf7lIdtg_C-oEj6wmwdq6ZZ7wD1t1h1To",
-    authDomain: "file-drive-d02c8.firebaseapp.com",
-    projectId: "file-drive-d02c8",
-    storageBucket: "file-drive-d02c8.appspot.com",
-    messagingSenderId: "519743232197",
-    appId: "1:519743232197:web:2b094d9dd73f9f615538ac",
-    measurementId: "G-P2LNQ2DET0"
-};
+export const useFirebase = () => {
+    const runtimeConfig = useRuntimeConfig();
+    const firebaseConfig = {
+        apiKey: runtimeConfig.public.firebase.apiKey,
+        authDomain: runtimeConfig.public.firebase.authDomain,
+        projectId: runtimeConfig.public.firebase.projectId,
+        storageBucket: runtimeConfig.public.firebase.storageBucket,
+        messagingSenderId: runtimeConfig.public.firebase.messagingSenderId,
+        appId: runtimeConfig.public.firebase.appId,
+        measurementId: runtimeConfig.public.firebase.measurementId
+    };
 
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const storage = getStorage(app);
+    const firestore = getFirestore(app);
 
-const app = initializeApp(firebaseConfig);
-
-export const auth = getAuth(app);
-export const storage = getStorage(app);
-export const firestore = getFirestore(app);
+    return {
+        app,
+        auth,
+        storage,
+        firestore
+    }
+}

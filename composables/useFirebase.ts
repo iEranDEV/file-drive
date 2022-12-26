@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase/auth';
+import { browserLocalPersistence, getAuth, setPersistence } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
-import { getFirestore} from 'firebase/firestore';
+import { doc, getDoc, getFirestore} from 'firebase/firestore';
+import { store } from "~~/plugins/vuex";
 
 export const useFirebase = () => {
     const runtimeConfig = useRuntimeConfig();
@@ -16,9 +17,22 @@ export const useFirebase = () => {
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
     const storage = getStorage(app);
     const firestore = getFirestore(app);
+    const auth = getAuth(app);
+    setPersistence(auth, browserLocalPersistence);
+    auth.onAuthStateChanged(async (user) => {
+        store.commit('setLoaded', false);
+        if(user) {
+            const userSnap = await getDoc(doc(firestore, "users", user.uid));
+            if(userSnap.exists()) {
+                store.commit('setUser', userSnap.data() as User);
+            }
+            store.commit('setLoaded', true);
+        } else {
+            store.commit('setUser', {});
+        }
+    })
 
     return {
         app,

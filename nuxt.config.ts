@@ -22,5 +22,11 @@ export default defineNuxtConfig({
                 measurementId: process.env.NUXT_MEASUREMENT_ID
             }
         }
+    },
+    
+    app: {
+        head: {
+            script: [{src: 'https://kit.fontawesome.com/959f77474a.js', crossorigin: 'anonymous'}]
+        }
     }
 })

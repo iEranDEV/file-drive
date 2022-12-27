@@ -5,6 +5,7 @@ export const store = createStore({
         return {
             user: {} as User,
             loaded: false,
+            viewType: 'grid',
         }
     },
 
@@ -14,6 +15,9 @@ export const store = createStore({
         },
         setLoaded(state, value) {
             state.loaded = value;
+        },
+        setViewType(state, value) {
+            state.viewType = value;
         }
     },
 })

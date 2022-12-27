@@ -1,6 +1,6 @@
 <template>
-    <div class="w-screen h-screen bg-stone-200">
-        test
+    <div class="w-full h-full">
+        <p>{{ $store.state.user }}</p>
     </div>
 </template>
 
@@ -10,12 +10,12 @@ import { useStore } from 'vuex';
 
 export default defineComponent({
     setup() {
-        const firebase = useFirebase();
         const store = useStore();
+        const firebase = useFirebase();
 
         return {
-            firebase,
             store,
+            firebase
         }
     },
 })

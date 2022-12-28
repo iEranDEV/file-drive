@@ -21,6 +21,7 @@ export default defineComponent({
     props: {
         route: {
             type: String,
+            default: '/',
             required: true,
         }
     }

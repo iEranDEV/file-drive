@@ -5,7 +5,7 @@ export const store = createStore({
         return {
             user: {} as User,
             loaded: false,
-            viewType: 'grid',
+            viewType: 'list',
         }
     },
 

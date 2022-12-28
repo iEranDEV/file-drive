@@ -25,6 +25,7 @@ export const useFirebase = () => {
         store.commit('setLoaded', false);
         if(user) {
             if(store.state.user?.uid !== user.uid) {
+                console.log('read');
                 const userSnap = await getDoc(doc(firestore, "users", user.uid));
                 if(userSnap.exists()) {
                     store.commit('setUser', userSnap.data() as User);

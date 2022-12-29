@@ -10,12 +10,14 @@ declare global {
     }
 
     type FileItem = {
+        id: string,
         owner: string,
         type: 'FILE' | 'FOLDER',
-        dbURL: string,
+        dbURL: string | null,
         name: string,
-        format: string,
+        format: string | null,
         modified: Date,
+        folder: string | null,
     }
 
 }

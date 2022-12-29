@@ -1,10 +1,9 @@
 <template>
-    <div class="flex fixed w-screen h-screen md:w-24 lg:w-60 md:bg-stone-100 z-20">
+    <div class="md:h-screen flex fixed md:w-24 lg:w-60 md:bg-stone-100 z-20" :class="menu ? 'w-screen h-screen' : 'w-16 h-16'">
         
         <!-- Purple circle (mobile only) -->
-        <svg class="md:hidden h-full fixed transition-all duration-500" fill="#c084fc" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-            <circle class="transition-all duration-500" :class="menu ? 'scale-[13]' : 'scale-[0.5]'" cx="0.5" cy="0.5" r="1" />
-        </svg>
+        <div class="md:hidden transition-all duration-500 absolute bg-purple-400 rounded-full" :class="menu ? 'w-[90rem] h-[90rem] -top-96 -left-96' : 'w-20 h-20 -top-4 -left-4'">
+        </div>
 
         <!-- Mobile toggler -->
         <button @click="toggleMenu()" class="fixed top-0 z-20 left-0 m-3 text-stone-100 md:hidden">
@@ -13,7 +12,7 @@
         </button>
 
         <!-- Menu -->
-        <div class="w-full h-full flex-col justify-center md:justify-around items-center z-10 transition-all duration-300 flex md:opacity-100 px-4" :class="menu ? 'opacity-100' : 'opacity-0'">
+        <div class="w-full h-full flex-col justify-center md:justify-around items-center z-10 transition-all duration-300 flex md:opacity-100 px-4 md:flex" :class="menu ? 'flex' : 'hidden'">
             <img src="~/assets/logo.png" alt="Logo" class="lg:h-32 hidden lg:block">
             <img src="~/assets/box_logo.png" alt="Logo" class="lg:h-32 hidden md:block lg:hidden">
 
@@ -69,7 +68,7 @@
                 </nav-button>
             </div>
 
-            <div class="flex flex-col gap-2 w-full justify-center items-center">
+            <div class="flex flex-col gap-1 w-full justify-center items-center">
                 <!-- Help center -->
                 <nav-button route="/test">
                     <template #icon>

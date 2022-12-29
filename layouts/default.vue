@@ -10,7 +10,7 @@
                         <div class="h-10 w-full">
                             <UserBar />
                         </div>
-                        <div class="h-max w-full overflow-auto">
+                        <div class="h-max w-full">
                             <slot />
                         </div>
                     </div>
@@ -31,6 +31,8 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     setup() {
 
+    },
+    methods: {
     }
 })
 </script>

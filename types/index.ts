@@ -9,4 +9,13 @@ declare global {
         photoURL: string,
     }
 
+    type FileItem = {
+        owner: string,
+        type: 'FILE' | 'FOLDER',
+        dbURL: string,
+        name: string,
+        format: string,
+        modified: Date,
+    }
+
 }

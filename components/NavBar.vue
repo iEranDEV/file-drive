@@ -1,8 +1,8 @@
 <template>
-    <div class="md:h-screen flex fixed md:w-24 lg:w-60 md:bg-stone-100 z-20" :class="menu ? 'w-screen h-screen' : 'w-16 h-16'">
-        
+    <div v-if="$store.state.user != {}" class="md:h-screen flex fixed md:w-24 md:bg-stone-100 lg:w-60 z-20" :class="[menu ? 'w-screen h-screen' : 'w-16 h-16']">
+
         <!-- Purple circle (mobile only) -->
-        <div class="md:hidden transition-all duration-500 absolute bg-purple-400 rounded-full" :class="menu ? 'w-[90rem] h-[90rem] -top-96 -left-96' : 'w-20 h-20 -top-4 -left-4'">
+        <div class="md:hidden transition-all bg-purple-400 duration-500 absolute rounded-full" :class="[menu ? 'w-[90rem] h-[90rem] -top-96 -left-96' : 'w-20 h-20 -top-4 -left-4']">
         </div>
 
         <!-- Mobile toggler -->

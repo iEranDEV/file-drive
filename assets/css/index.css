@@ -8,10 +8,6 @@ body {
     @apply bg-stone-100;
 }
 
-h1, th {
-    font-family: 'Montserrat', sans-serif;
-}
-
-.montserrat {
+* {
     font-family: 'Montserrat', sans-serif;
 }

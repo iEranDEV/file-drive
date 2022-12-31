@@ -18,6 +18,9 @@ export const store = createStore({
         },
         setViewType(state, value) {
             state.viewType = value;
+        },
+        setColorTheme(state, value) {
+            state.user.colorTheme = value;
         }
     },
 })

@@ -31,7 +31,8 @@
 
         <!-- Data table -->
         <div class="h-full md:max-h-[78vh] overflow-auto relative transition-all">
-            <table class="w-full text-stone-500 text-sm table-auto">
+            <!-- List view -->
+            <table v-if="$store.state.viewType === 'list'" class="w-full text-stone-500 text-sm table-auto">
                 <thead class="w-full uppercase">
                     <tr class="w-full">
                         <th scope="col" class="text-start md:text-start w-20">
@@ -46,7 +47,7 @@
                                 <i class="fa-solid fa-sort hidden group-hover:text-stone-400 group-hover:inline"></i>
                             </div>
                         </th>
-                        <th scope="col" class="hidden md:table-cell text-start w-32">
+                        <th scope="col" class="hidden md:table-cell text-start w-44">
                             <div class="flex items-center gap-2 group cursor-pointer text-stone-500 hover:text-stone-400">
                                 <p>Modified</p>
                                 <i class="fa-solid fa-sort hidden group-hover:text-stone-400 group-hover:inline"></i>
@@ -76,6 +77,28 @@
                     </tr>
                 </tbody>
             </table>
+
+            <!-- Grid view -->
+            <div v-else-if="$store.state.viewType === 'grid'" class="">
+                <div class="w-full h-10">
+                    <!-- TODO: Order options -->
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 pt-2">
+                    <div v-for="file in structure" :key="file" @click="clickFile(file)" class="rounded-xl bg-stone-50 w-full text-sm p-2 h-16 flex justify-between gap-2 items-center cursor-pointer hover:bg-stone-100/50">
+                        <div class="flex items-center gap-2 truncate">
+                            <i v-if="file.type === 'FOLDER'" class="fa-regular fa-folder fa-xl text-amber-500"></i>
+                            <i v-else-if="file.format === 'application/pdf'" class="fa-regular fa-file-pdf fa-xl text-red-500"></i>
+                            <i v-else-if="file.format === 'image/png'" class="fa-regular fa-image fa-xl text-teal-400"></i>
+                            <p class="truncate">{{ file.name }}</p>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
     </div>

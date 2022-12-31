@@ -25,8 +25,9 @@
 </template>
 
 <script lang="ts">
-import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
+import { getRedirectResult, GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
 import { doc, getDoc, setDoc } from '@firebase/firestore';
+import { signInWithRedirect } from 'firebase/auth';
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -40,10 +41,9 @@ export default defineComponent({
             firebase,
         }
     },
-    methods: {
-        async googleSignIn() {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(this.firebase.auth, provider).then(async (result) => {
+    async mounted() {
+        getRedirectResult(this.firebase.auth).then(async (result) => {
+            if(result) {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const userSnap = await getDoc(doc(this.firebase.firestore, "users", result.user.uid));
                 if(userSnap.exists()) {
@@ -54,15 +54,23 @@ export default defineComponent({
                         displayName: result.user.displayName as string,
                         email: result.user.email as string,
                         provider: 'google',
-                        photoURL: result.user.photoURL as string
+                        photoURL: result.user.photoURL as string,
+                        colorTheme: 'purple',
                     }
                     await setDoc(doc(this.firebase.firestore, "users", result.user.uid), user);
                     this.$store.commit('setUser', user);
                 }
                 navigateTo('/');
-            }).catch((error) => {
-                console.log(error);
-            })
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    },
+    methods: {
+        async googleSignIn() {
+            const provider = new GoogleAuthProvider();
+            signInWithRedirect(this.firebase.auth, provider);
+            console.log('sign')
         }
     }
 })

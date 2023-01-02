@@ -36,21 +36,28 @@
                 <thead class="w-full uppercase">
                     <tr class="w-full">
                         <th scope="col" class="text-start md:text-start w-20">
-                            <div class="flex items-center gap-2 group cursor-pointer text-stone-500 hover:text-stone-400">
+                            <div @click="handleSort('type')" class="flex items-center gap-2 group cursor-pointer">
                                 <p>Type</p>
-                                <i class="fa-solid fa-sort hidden group-hover:text-stone-400 group-hover:inline"></i>
                             </div>
                         </th>
                         <th scope="col" class="text-start">
-                            <div class="flex items-center gap-2 group cursor-pointer text-stone-500 hover:text-stone-400">
+                            <div @click="handleSort('name')" class="flex items-center gap-2 group cursor-pointer text-stone-500 hover:text-stone-400">
                                 <p>Name</p>
-                                <i class="fa-solid fa-sort hidden group-hover:text-stone-400 group-hover:inline"></i>
+                                <div>
+                                    <i v-if="sortBy === 'name' && sortType === 'desc'" class="fa-solid fa-sort-down"></i>
+                                    <i v-else-if="sortBy === 'name' && sortType === 'asc'" class="fa-solid fa-sort-up"></i>
+                                    <i v-else class="fa-solid fa-sort hidden group-hover:inline"></i>
+                                </div>
                             </div>
                         </th>
                         <th scope="col" class="hidden md:table-cell text-start w-44">
-                            <div class="flex items-center gap-2 group cursor-pointer text-stone-500 hover:text-stone-400">
+                            <div @click="handleSort('modified')" class="flex items-center gap-2 group cursor-pointer text-stone-500 hover:text-stone-400">
                                 <p>Modified</p>
-                                <i class="fa-solid fa-sort hidden group-hover:text-stone-400 group-hover:inline"></i>
+                                <div>
+                                    <i v-if="sortBy === 'modified' && sortType === 'desc'" class="fa-solid fa-sort-down"></i>
+                                    <i v-else-if="sortBy === 'modified' && sortType === 'asc'" class="fa-solid fa-sort-up"></i>
+                                    <i v-else class="fa-solid fa-sort hidden group-hover:inline"></i>
+                                </div>
                             </div>
                         </th>
                         <th scope="col" class="hidden md:table-cell text-start w-40"></th>
@@ -84,7 +91,7 @@
                     <!-- TODO: Order options -->
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 pt-2">
-                    <div v-for="file in structure" :key="file" @click="clickFile(file)" class="rounded-xl bg-stone-50 w-full text-sm p-2 h-16 flex justify-between gap-2 items-center cursor-pointer hover:bg-stone-100/50">
+                    <div v-for="file in structure" :key="file" @click="clickFile(file)" class="rounded-xl bg-stone-50 md:bg-stone-100 w-full text-sm p-2 h-16 flex justify-between gap-2 items-center cursor-pointer hover:bg-stone-100/50">
                         <div class="flex items-center gap-2 truncate">
                             <i v-if="file.type === 'FOLDER'" class="fa-regular fa-folder fa-xl text-amber-500"></i>
                             <i v-else-if="file.format === 'application/pdf'" class="fa-regular fa-file-pdf fa-xl text-red-500"></i>
@@ -120,13 +127,15 @@ export default defineComponent({
         return {
             store,
             firebase,
-            folderModal
+            folderModal,
         }
     },
     data() {
         return {
             files: Array<FileItem>(),
             currentPath: Array<FileItem>(),
+            sortBy: 'none',
+            sortType: 'desc',
         }
     },
     computed: {
@@ -141,6 +150,16 @@ export default defineComponent({
                     if(file.folder === this.currentPath[this.currentPath.length - 1].id) structure.push(file);
                 })
             }
+
+            console.log('returned structure')
+
+            structure.sort(function sortByType(a, b): number {
+                if(a.type === 'FOLDER') return -1;
+                return 0;
+            })
+
+            
+
             return structure;
         }
     },
@@ -204,6 +223,18 @@ export default defineComponent({
         clickFile(file: FileItem) {
             if(file.type === 'FOLDER') {
                 this.currentPath.push(file);
+            }
+        },
+        handleSort(value: string) {
+            if(this.sortBy === value) {
+                if(this.sortType === 'desc') this.sortType = 'asc';
+                else {
+                    this.sortBy = 'none';
+                    this.sortType = 'desc';
+                }
+            } else {
+                this.sortBy = value;
+                this.sortType = 'desc';
             }
         }
     }

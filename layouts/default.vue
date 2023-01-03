@@ -1,6 +1,8 @@
 <template>
     <div class="h-full md:h-screen w-full">
 
+        <ContextMenu />
+
         <NavBar />        
 
         <div class="w-full h-full flex flex-col md:flex-row md:pl-28 lg:pl-64">

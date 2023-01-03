@@ -65,7 +65,7 @@
                     </tr>
                 </thead>
                 <tbody class="text-stone-700">
-                    <tr v-for="file in structure" :key="file" @click="clickFile(file)" class="hover:bg-stone-300 cursor-pointer">
+                    <tr @contextmenu.prevent="openContextMenu($event, file)" v-for="file in structure" :key="file" @click="clickFile(file)" class="hover:bg-stone-300 cursor-pointer">
                         <td class="text-start md:text-center py-3">
                             <i v-if="file.type === 'FOLDER'" class="fa-regular fa-folder fa-xl text-amber-500"></i>
                             <i v-else-if="file.format === 'application/pdf'" class="fa-regular fa-file-pdf fa-xl text-red-500"></i>
@@ -77,7 +77,7 @@
                             Private
                         </td>
                         <td class="text-end">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <svg @click.stop="openContextMenu($event, file)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                             </svg>
                         </td>
@@ -258,6 +258,13 @@ export default defineComponent({
                 this.sortBy = value;
                 this.sortType = 'desc';
             }
+        },
+        openContextMenu(event: Event, file: FileItem) {
+            event.preventDefault();
+            this.$store.commit('setContextMenu', {
+                event: event as PointerEvent,
+                file: file
+            })
         }
     }
 })

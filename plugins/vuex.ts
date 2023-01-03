@@ -6,6 +6,7 @@ export const store = createStore({
             user: {} as User,
             loaded: false,
             viewType: 'list',
+            contextMenu: null
         }
     },
 
@@ -21,6 +22,9 @@ export const store = createStore({
         },
         setColorTheme(state, value) {
             state.user.colorTheme = value;
+        },
+        setContextMenu(state, value) {
+            state.contextMenu = value;
         }
     },
 })

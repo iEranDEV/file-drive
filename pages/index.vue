@@ -36,7 +36,7 @@
                 <thead class="w-full uppercase">
                     <tr class="w-full">
                         <th scope="col" class="text-start md:text-start w-20">
-                            <div @click="handleSort('type')" class="flex items-center gap-2 group cursor-pointer">
+                            <div class="flex items-center gap-2 group cursor-pointer">
                                 <p>Type</p>
                             </div>
                         </th>
@@ -84,6 +84,7 @@
                     </tr>
                 </tbody>
             </table>
+
 
             <!-- Grid view -->
             <div v-else-if="$store.state.viewType === 'grid'" class="">
@@ -151,14 +152,35 @@ export default defineComponent({
                 })
             }
 
-            console.log('returned structure')
-
             structure.sort(function sortByType(a, b): number {
                 if(a.type === 'FOLDER') return -1;
                 return 0;
             })
 
-            
+            switch(this.sortBy) {
+                case 'name':
+                    if(this.sortType === 'desc') {
+                        structure.sort((a, b) => {
+                            return a.name.localeCompare(b.name);
+                        })
+                    } else {
+                        structure.sort((a, b) => {
+                            return b.name.localeCompare(a.name);
+                        })
+                    }
+                    break;
+                case 'modified':
+                    if(this.sortType === 'desc') {
+                        structure.sort((a, b) => {
+                            return (a.modified instanceof Date ? a.modified : (a.modified as any).toDate()).getTime() - (b.modified instanceof Date ? b.modified : (b.modified as any).toDate()).getTime()
+                        })
+                    } else {
+                        structure.sort((a, b) => {
+                            return (b.modified instanceof Date ? b.modified : (b.modified as any).toDate()).getTime() - (a.modified instanceof Date ? a.modified : (a.modified as any).toDate()).getTime()
+                        })
+                    }
+                    break;
+            }
 
             return structure;
         }

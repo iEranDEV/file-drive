@@ -55,6 +55,7 @@ export default defineComponent({
                         email: result.user.email as string,
                         provider: 'google',
                         photoURL: result.user.photoURL as string,
+                        favorites: Array<string>(),
                         colorTheme: 'purple',
                     }
                     await setDoc(doc(this.firebase.firestore, "users", result.user.uid), user);

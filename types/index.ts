@@ -8,6 +8,7 @@ declare global {
         provider: string,
         photoURL: string,
         colorTheme: string,
+        favorites: Array<string>
     }
 
     type FileItem = {

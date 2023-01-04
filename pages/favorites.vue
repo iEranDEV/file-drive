@@ -3,7 +3,7 @@
 
         <!-- Heading -->
         <div class="flex justify-between items-center">
-            <h1 class="text-2xl font-extrabold font-montserrat text-stone-700 uppercase">Starred</h1>
+            <h1 class="text-2xl font-extrabold font-montserrat text-stone-700 uppercase">Favorites</h1>
         </div>
     </div>
 </template>

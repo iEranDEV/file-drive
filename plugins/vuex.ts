@@ -8,7 +8,8 @@ export const store = createStore({
             loaded: false,
             viewType: 'list',
             contextMenu: null,
-            notifications: Array<INotification>()
+            notifications: Array<INotification>(),
+            selectedFile: null,
         }
     },
 
@@ -45,6 +46,9 @@ export const store = createStore({
         },
         setFile(state, value: FileItem) {
             state.files[state.files.findIndex(item => item.id === value.id)] = value;
+        },
+        setSelectedFile(state, value: FileItem) {
+            state.selectedFile = value as any;
         }
     },
 })

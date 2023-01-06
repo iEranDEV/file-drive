@@ -8,6 +8,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "autoprefixer": "^10.4.13",
     "nuxt": "3.0.0",
     "postcss": "^8.4.20",
@@ -15,7 +16,9 @@
   },
   "dependencies": {
     "@fortawesome/vue-fontawesome": "^3.0.2",
+    "file-saver": "^2.0.5",
     "firebase": "^9.15.0",
+    "jszip": "^3.10.1",
     "vuex": "^4.0.2"
   }
 }

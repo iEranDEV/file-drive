@@ -108,6 +108,8 @@ export default defineComponent({
         clickFile(file: FileItem) {
             if(file.type === 'FOLDER') {
                 this.$emit('pathChange', file);
+            } else {
+                this.$store.commit('setSelectedFile', file);
             }
         },
         handleSort(value: string) {
@@ -145,7 +147,6 @@ export default defineComponent({
                     }
                 })
             } else {
-                console.log(this.currentPath);
                 (this.$store.state.files as Array<FileItem>).forEach((file) => {
                     if(file.folder === this.currentPath[this.currentPath.length - 1].id) {
                         if(this.type === 'favorites' && file.favorite === true) {

@@ -9,7 +9,7 @@
             <div class=" md:py-4 md:pr-4 w-screen h-full md:h-screen min-h-screen md:max-h-screen">
                 <div class="w-full h-full md:bg-stone-200 p-4 md:rounded-xl">
                     <div v-if="$store.state.loaded" class="w-full h-full flex flex-col gap-2">
-                        <div class="h-10 w-full">
+                        <div v-if="$route.fullPath !== '/profile'" class="h-10 w-full">
                             <UserBar />
                         </div>
                         <div class="h-max w-full">
@@ -21,6 +21,9 @@
                     </div>
                 </div>
             </div>
+
+            <!-- File info -->
+            <FileInfo></FileInfo>
 
             <!-- Notifications -->
             <div class="fixed bottom-0 right-0 m-4 flex flex-col gap-4">

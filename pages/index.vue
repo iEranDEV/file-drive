@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full flex flex-col gap-4">
+    <div class="w-full h-full flex flex-col gap-4 md:overflow-hidden">
 
         <!-- Heading -->
         <div class="flex justify-between items-center">
@@ -66,9 +66,8 @@ export default defineComponent({
             const target = event.target as HTMLInputElement;
             if(target && target.files?.length && target.files?.length > 0) {
                 const target = event.target as HTMLInputElement;
-
                 for(const file of Array.from(target.files as FileList)) {
-                    const url = await uploadBytes(FirebaseRef(this.firebase.storage, file.name), file).then(async (snapshot) => {
+                    const url = await uploadBytes(FirebaseRef(this.firebase.storage, this.$store.state.user.uid + '/' + file.name), file).then(async (snapshot) => {
                         return getDownloadURL(snapshot.ref).then((url) => {
                             return url;
                         })

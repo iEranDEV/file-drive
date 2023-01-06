@@ -1,18 +1,5 @@
 <template>
-    <div v-if="$route.fullPath === '/settings' || $route.fullPath === '/profile'" class="w-full h-10 flex justify-end md:justify-end mb-2">
-        <div class="flex justify-end items-center gap-4">
-            <button class="flex justify-center items-center relative h-9 w-9 text-stone-400 hover:text-stone-700">
-                <i class="fa-solid fa-bell fa-xl"></i>
-                <div class="w-2 h-2 bg-purple-500 border border-stone-100 rounded-full absolute top-2 right-2"></div>
-            </button>
-
-            <!-- User profile -->
-            <NuxtLink to="/" class="flex justify-center items-center">
-                <img :src="this.$store.state.user.photoURL" alt="User avatar" class="h-9 w-9 rounded-full border border-purple-400">
-            </NuxtLink>
-        </div>
-    </div>
-    <div v-else class="w-full h-10 flex justify-end md:justify-between mb-2">
+    <div class="w-full h-10 flex justify-end md:justify-between mb-2">
         <form class="gap-2 items-center hidden md:flex">
             <button type="submit" class="flex justify-center items-center text-stone-400 hover:text-stone-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -36,8 +23,8 @@
                 </svg>
             </button>
 
-            <NuxtLink to="/" class="flex justify-center items-center">
-                <img :src="this.$store.state.user.photoURL" alt="User avatar" class="h-9 w-9 rounded-full border border-purple-400">
+            <NuxtLink to="/profile" class="flex justify-center items-center">
+                <img :src="this.$store.state.user.photoURL" alt="User avatar" class="h-9 w-9 rounded-full border hover:border-2 transition-all border-purple-400">
             </NuxtLink>
         </div>
     </div>

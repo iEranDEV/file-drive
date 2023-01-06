@@ -22,7 +22,7 @@
             </div>
 
             <!-- Download button -->
-            <div class="hover:bg-stone-200 flex gap-4 justify-start items-center px-4 py-2 w-full cursor-pointer">
+            <div @click.stop="downloadFile" class="hover:bg-stone-200 flex gap-4 justify-start items-center px-4 py-2 w-full cursor-pointer">
                 <i class="fa-regular fa-circle-down"></i>
                 <p>Download</p>
             </div>
@@ -47,6 +47,10 @@
 import { collection, deleteDoc, doc, getDocs, updateDoc } from '@firebase/firestore';
 import { query, where } from 'firebase/firestore';
 import { defineComponent } from 'vue'
+import JSZip from 'jszip';
+// @ts-ignore
+import { saveAs } from 'file-saver';
+
 
 export default defineComponent({
     setup() {
@@ -98,6 +102,29 @@ export default defineComponent({
                 type: file.favorite ? 'SUCCESS' : 'ERROR'
             })
             this.$store.commit('setContextMenu', null)
+        },
+        async downloadFile() {
+            let file = {...this.$store.state.contextMenu.file};
+            if(file.type === 'FILE') {
+                fetch(file.dbURL).then(response => response.blob()).then(blob => {
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = file.name
+                    link.click()
+                })
+            } else if(file.type === 'FOLDER') {
+                const jszip = new JSZip();
+                const q = query(collection(this.firebase.firestore, "files"), where("folder", "==", file.id));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach(async (element) => {
+                    const data = element.data();
+                    const fileBlob = await fetch(data.dbURL);
+                    jszip.file(data.name, await fileBlob.blob());
+                })
+                setTimeout(() => {
+                    jszip.generateAsync({ type: 'blob' }).then((blob) => saveAs(blob, new Date().toLocaleDateString() + '.zip'));
+                }, 1000)
+            }
         }
     },
     computed: {

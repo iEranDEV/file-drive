@@ -77,11 +77,21 @@ export default defineComponent({
         },
         async favoriteFile() {
             let file = {...this.$store.state.contextMenu.file};
-            file.favorite = !file.favorite;
+            let value = !file.favorite;
+            file.favorite = value;
             this.$store.commit('setFile', file);
-            updateDoc(doc(this.firebase.firestore, "files", file.id), {
-                favorite: true,
+            await updateDoc(doc(this.firebase.firestore, "files", file.id), {
+                favorite: value,
             })
+            if(file.type === 'FOLDER') {
+                const q = query(collection(this.firebase.firestore, "files"), where("folder", "==", file.id));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((element) => {
+                    updateDoc(doc(this.firebase.firestore, "files", element.data().id), {
+                        favorite: value,
+                    });
+                })
+            }
             this.$store.commit('addNotification', {
                 id: (crypto as any).randomUUID(),
                 message: file.favorite ? 'Added file to favorites' : 'Removed file from favorites',

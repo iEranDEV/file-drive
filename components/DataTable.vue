@@ -137,13 +137,22 @@ export default defineComponent({
             if(this.currentPath.length == 0) {
                 (this.$store.state.files as Array<FileItem>).forEach((file) => {
                     if(file.folder === null) {
-                        structure.push(file);
+                        if(this.type === 'favorites' && file.favorite === true) {
+                            structure.push(file)
+                        } else if(this.type === 'my_files') {
+                            structure.push(file);
+                        }
                     }
                 })
             } else {
+                console.log(this.currentPath);
                 (this.$store.state.files as Array<FileItem>).forEach((file) => {
                     if(file.folder === this.currentPath[this.currentPath.length - 1].id) {
-                        structure.push(file);
+                        if(this.type === 'favorites' && file.favorite === true) {
+                            structure.push(file)
+                        } else if(this.type === 'my_files') {
+                            structure.push(file);
+                        }
                     }
                 })
             }

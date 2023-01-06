@@ -22,17 +22,43 @@
                 </div>
             </div>
 
-            <!--<InfoBar />-->
+            <!-- Notifications -->
+            <div class="fixed bottom-0 right-0 m-4 flex flex-col gap-4">
+                <Notification v-for="notification in $store.state.notifications" :key="notification.id" :notification="notification"></Notification>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { defineComponent } from 'vue'
 
 export default defineComponent({
     setup() {
+        const firebase = useFirebase();
 
+        return {
+            firebase,
+        }
+    },
+    computed: {
+        loaded() {
+            return this.$store.state.loaded;
+        }
+    },
+    watch: {
+        async loaded(newVal, oldVal) {
+            if(newVal) {
+                const q = query(collection(this.firebase.firestore, "files"), where("owner", "==", this.$store.state.user.uid));
+                const querySnapshot = await getDocs(q);
+                let files = new Array<FileItem>();
+                querySnapshot.forEach((doc) => {
+                    files.push(doc.data() as FileItem);
+                })
+                this.$store.commit('setFiles', files);
+            }
+        }
     }
 })
 </script>

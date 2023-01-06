@@ -84,9 +84,12 @@ export default defineComponent({
         
     },
     props: {
-        data: Array as PropType<Array<FileItem>>,
         currentPath: {
             type: Array as PropType<Array<FileItem>>,
+            required: true
+        },
+        type: {
+            type: String,
             required: true
         }
     },
@@ -99,8 +102,8 @@ export default defineComponent({
     methods: {
         getDate(date: any) {
             if(date instanceof Date) {
-                return date.toLocaleString();
-            } else return date.toDate().toLocaleString();
+                return date.toLocaleDateString();
+            } else return date.toDate().toLocaleDateString();
         },
         clickFile(file: FileItem) {
             if(file.type === 'FOLDER') {
@@ -129,15 +132,19 @@ export default defineComponent({
     },
     computed: {
         structure() {
-            if(!this.data) return;
+            if(!this.$store.state.files) return;
             const structure = Array<FileItem>();
             if(this.currentPath.length == 0) {
-                this.data.forEach((file) => {
-                    if(file.folder === null) structure.push(file);
+                (this.$store.state.files as Array<FileItem>).forEach((file) => {
+                    if(file.folder === null) {
+                        structure.push(file);
+                    }
                 })
             } else {
-                this.data.forEach((file) => {
-                    if(file.folder === this.currentPath[this.currentPath.length - 1].id) structure.push(file);
+                (this.$store.state.files as Array<FileItem>).forEach((file) => {
+                    if(file.folder === this.currentPath[this.currentPath.length - 1].id) {
+                        structure.push(file);
+                    }
                 })
             }
 

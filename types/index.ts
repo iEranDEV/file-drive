@@ -7,8 +7,7 @@ declare global {
         email: string,
         provider: string,
         photoURL: string,
-        colorTheme: string,
-        favorites: Array<string>
+        colorTheme: string
     }
 
     type FileItem = {
@@ -20,6 +19,13 @@ declare global {
         format: string | null,
         modified: Date,
         folder: string | null,
+        favorite: boolean,
+    }
+
+    type INotification = {
+        id: string,
+        message: string,
+        type: 'SUCCESS' | 'INFO' | 'ERROR',
     }
 
 }

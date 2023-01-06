@@ -30,14 +30,13 @@
         </div>
 
         <!-- Data table -->
-        <DataTable :data="files" :currentPath="currentPath" @pathChange="handlePathChange" />
+        <DataTable :currentPath="currentPath" @pathChange="handlePathChange" type="my_files" />
         
     </div>
 </template>
 
 <script lang="ts">
-import { collection, doc, getDocs, query, setDoc } from '@firebase/firestore';
-import { where } from 'firebase/firestore';
+import { doc, setDoc } from '@firebase/firestore';
 import { uploadBytes, getDownloadURL, ref as FirebaseRef } from 'firebase/storage';
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex';
@@ -56,16 +55,8 @@ export default defineComponent({
     },
     data() {
         return {
-            files: Array<FileItem>(),
             currentPath: Array<FileItem>(),
         }
-    },
-    async mounted() {
-        const q = query(collection(this.firebase.firestore, "files"), where("owner", "==", this.store.state.user.uid));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            this.files.push(doc.data() as FileItem);
-        })
     },
     methods: {
         handlePathChange(value: FileItem) {
@@ -92,9 +83,10 @@ export default defineComponent({
                         dbURL: url,
                         name: file.name,
                         modified: new Date(),
+                        favorite: false
                     }
                     await setDoc(doc(this.firebase.firestore, "files", id), fileItem);
-                    this.files.push(fileItem);
+                    this.$store.commit('addFile', fileItem);
                 }
             }
         },
@@ -110,9 +102,10 @@ export default defineComponent({
                     dbURL: null,
                     name: name,
                     modified: new Date(),
+                    favorite: false
                 }
                 await setDoc(doc(this.firebase.firestore, "files", id), fileItem);
-                this.files.push(fileItem);
+                this.$store.commit('addFile', fileItem);
             }
         }
     }

@@ -56,6 +56,7 @@ export default defineComponent({
                         provider: 'google',
                         photoURL: result.user.photoURL as string,
                         colorTheme: 'purple',
+                        createdAt: new Date(),
                     }
                     await setDoc(doc(this.firebase.firestore, "users", result.user.uid), user);
                     this.$store.commit('setUser', user);

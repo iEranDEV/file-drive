@@ -7,7 +7,8 @@ declare global {
         email: string,
         provider: string,
         photoURL: string,
-        colorTheme: string
+        colorTheme: string,
+        createdAt: Date,
     }
 
     type FileItem = {

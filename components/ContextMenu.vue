@@ -8,12 +8,6 @@
                 <p>Edit</p>
             </div>
 
-            <!-- Share button -->
-            <div class="hover:bg-stone-200 flex gap-4 justify-start items-center px-4 py-2 w-full cursor-pointer">
-                <i class="fa-regular fa-share-from-square"></i>
-                <p>Share</p>
-            </div>
-
             <!-- Star button -->
             <div @click.stop="favoriteFile" class="hover:bg-stone-200 flex gap-4 justify-start items-center px-4 py-2 w-full cursor-pointer">
                 <i :class="$store.state.contextMenu.file.favorite ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>

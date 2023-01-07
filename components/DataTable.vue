@@ -135,7 +135,7 @@ export default defineComponent({
     computed: {
         structure() {
             if(!this.$store.state.files) return;
-            const structure = Array<FileItem>();
+            let structure = Array<FileItem>();
             if(this.currentPath.length == 0) {
                 (this.$store.state.files as Array<FileItem>).forEach((file) => {
                     if(file.folder === null) {
@@ -156,6 +156,10 @@ export default defineComponent({
                         }
                     }
                 })
+            }
+
+            if(this.$store.state.searchQuery != null) {
+                structure = structure.filter(item => item.name.toLowerCase().includes(this.$store.state.searchQuery.toLowerCase()));
             }
 
             structure.sort(function sortByType(a, b): number {

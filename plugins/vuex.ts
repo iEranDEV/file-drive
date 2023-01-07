@@ -10,6 +10,7 @@ export const store = createStore({
             contextMenu: null,
             notifications: Array<INotification>(),
             selectedFile: null,
+            searchQuery: null,
         }
     },
 
@@ -49,6 +50,9 @@ export const store = createStore({
         },
         setSelectedFile(state, value: FileItem) {
             state.selectedFile = value as any;
+        },
+        setSearchQuery(state, value: string) {
+            state.searchQuery = value as any;
         }
     },
 })

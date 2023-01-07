@@ -1,10 +1,12 @@
 <template>
-    <div class="w-full h-full flex flex-col">
+    <div class="w-full h-full flex flex-col gap-2">
 
         <!-- Heading -->
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center mt-16 md:mt-0">
             <h1 class="text-2xl font-extrabold font-montserrat text-stone-700 uppercase">Profile</h1>
         </div>
+
+        
     </div>
 </template>
 

@@ -38,7 +38,7 @@
                     <td class="text-start md:text-center py-3">
                         <i v-if="file.type === 'FOLDER'" class="fa-regular fa-folder fa-xl text-amber-500"></i>
                         <i v-else-if="file.format === 'application/pdf'" class="fa-regular fa-file-pdf fa-xl text-red-500"></i>
-                        <i v-else-if="file.format === 'image/png'" class="fa-regular fa-image fa-xl text-teal-400"></i>
+                        <i v-else-if="file.format === 'image/png' || file.format === 'image/jpeg'" class="fa-regular fa-image fa-xl text-teal-400"></i>
                     </td>
                     <td>{{ file.name }}</td>
                     <td class="hidden md:table-cell">{{ getDate(file.modified) }}</td>

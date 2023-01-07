@@ -1,42 +1,15 @@
-# Nuxt 3 Minimal Starter
+# File drive application
+### Made using Nuxt3, TailwindCSS and Firebase
+---
+## To Do
+- Add option to share files with others
+- Moving files between folders
+- Add user settings
+- Add dark mode (optional)
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install --shamefully-hoist
-```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Photos
+![Main view (Desktop)](/img/main_view_desktop.png)
+![File info & context menu](/img/file_data_contextmenu.png)
+![Profile page](/img/profile_page.png)
+![Main view (Mobile)](/img/mobile_view.png)
+![Profile page (Mobile)](/img/mobile_view_profile.png)

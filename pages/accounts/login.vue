@@ -58,6 +58,7 @@ export default defineComponent({
                         colorTheme: 'purple',
                         createdAt: new Date(),
                     }
+                    localStorage.setItem('loggedIn', 'true');
                     await setDoc(doc(this.firebase.firestore, "users", result.user.uid), user);
                     this.$store.commit('setUser', user);
                 }

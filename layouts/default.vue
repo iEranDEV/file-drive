@@ -50,6 +50,22 @@ export default defineComponent({
             return this.$store.state.loaded;
         }
     },
+    async mounted() {
+        if(this.loaded) {
+            const q = query(collection(this.firebase.firestore, "files"), where("owner", "==", this.$store.state.user.uid));
+            const querySnapshot = await getDocs(q);
+            let files = new Array<FileItem>();
+            querySnapshot.forEach((doc) => {
+                files.push(doc.data() as FileItem);
+            })
+            this.$store.commit('setFiles', files);
+        }
+        setTimeout(() => {
+            if(this.$store.state.user.uid === undefined) {
+                navigateTo('/accounts/login')
+            }
+        }, 1000)
+    },
     watch: {
         async loaded(newVal, oldVal) {
             if(newVal) {
